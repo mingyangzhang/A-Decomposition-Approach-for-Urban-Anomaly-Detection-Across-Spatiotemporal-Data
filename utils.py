@@ -33,6 +33,8 @@ def compute_metrics(ano_scores, label, prefix):
                "recall@k": recall_ks}
 
     # save metrics
+    if not os.path.exists("metrics"):
+        os.makedirs("metrics")
     ind = 0
     existings = re.findall(prefix+"-\d+", "\t".join(os.listdir("metrics")))
     if existings:
@@ -42,8 +44,5 @@ def compute_metrics(ano_scores, label, prefix):
     w = 2
     if "weight" in os.environ:
         w = os.environ["weight"]
-
-    if not os.path.exists("metrics"):
-        os.makedirs("metrics")
     with open("metrics/{}-{}-w{}.json".format(prefix, ind, w), "w") as fw:
         fw.write(json.dumps(metrics, indent=4))
