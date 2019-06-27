@@ -43,5 +43,7 @@ def compute_metrics(ano_scores, label, prefix):
     if "weight" in os.environ:
         w = os.environ["weight"]
 
+    if not os.path.exists("metrics"):
+        os.makedirs("metrics")
     with open("metrics/{}-{}-w{}.json".format(prefix, ind, w), "w") as fw:
         fw.write(json.dumps(metrics, indent=4))
